@@ -13,3 +13,4 @@ WARMAP CONQUEST v18 - КЛАНЫ
 
 
 V19: Supabase config is embedded in index.html. Invite links now contain only ?clan=CODE.
+deploy restart
