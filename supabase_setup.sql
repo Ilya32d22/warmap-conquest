@@ -95,7 +95,7 @@ begin
   if exists(select 1 from public.clan_members where user_id=v_uid) then raise exception 'Вы уже состоите в клане'; end if;
 
   loop
-    v_code := upper(substr(encode(gen_random_bytes(6),'hex'),1,8));
+    v_code := upper(substr(replace(gen_random_uuid()::text, '-', ''),1,8));
     exit when not exists(select 1 from public.clans where invite_code=v_code);
   end loop;
 

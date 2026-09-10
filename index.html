@@ -710,10 +710,12 @@
 <script>
 (() => {
   'use strict';
-  const APP_VERSION = 18;
+  const APP_VERSION = 19;
   const STORAGE_KEY = 'warmap-conquest-v2';
   const CLAN_CONFIG_KEY = 'warmap-clan-config-v1';
   const CLAN_NAME_KEY = 'warmap-player-name-v1';
+  const DEFAULT_SUPABASE_URL = 'https://swdgqldsfmwnciyndipt.supabase.co';
+  const DEFAULT_SUPABASE_KEY = 'sb_publishable_eaecAJuuwEeMxURhnYM_6A_l4M8DlmE';
   const MAP_W = 1200, MAP_H = 650;
   const WORLD_URL = 'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json';
   const PERF_MOBILE = window.matchMedia('(max-width: 900px)').matches || window.matchMedia('(pointer: coarse)').matches;
@@ -1462,7 +1464,10 @@
     let n=0; countryMeta.forEach(m=>{const p=getProgress(m.code);if(p.total>0&&p.taken>=p.total)n++;}); return n;
   }
   function getClanConfig(){
-    try{return JSON.parse(localStorage.getItem(CLAN_CONFIG_KEY)||'null')||{};}catch{return {};}
+    try{
+      const saved=JSON.parse(localStorage.getItem(CLAN_CONFIG_KEY)||'null')||{};
+      return validClanConfig(saved)?saved:{url:DEFAULT_SUPABASE_URL,key:DEFAULT_SUPABASE_KEY};
+    }catch{return {url:DEFAULT_SUPABASE_URL,key:DEFAULT_SUPABASE_KEY};}
   }
   function saveClanConfig(url,key){
     const cfg={url:String(url||'').trim().replace(/\/$/,''),key:String(key||'').trim()};
@@ -1472,7 +1477,6 @@
   function hydrateClanConfigFromInvite(){
     try{
       const q=new URLSearchParams(location.search); pendingInviteCode=(q.get('clan')||'').trim().toUpperCase()||null;
-      const sb=q.get('sb'),pk=q.get('pk'); if(sb&&pk&&validClanConfig({url:sb,key:pk}))saveClanConfig(sb,pk);
     }catch{}
     const cfg=getClanConfig(); if($('clan-supabase-url'))$('clan-supabase-url').value=cfg.url||''; if($('clan-supabase-key'))$('clan-supabase-key').value=cfg.key||'';
     const savedName=localStorage.getItem(CLAN_NAME_KEY)||''; if($('clan-player-name'))$('clan-player-name').value=savedName;
@@ -1552,12 +1556,12 @@
   }
   async function shareClanInvite(){
     if(!clanInfo?.invite_code)return; if(!/^https?:$/.test(location.protocol)||['localhost','127.0.0.1'].includes(location.hostname)){showToast('Чтобы отправить ссылку другу, сначала разместите приложение на HTTPS',4600);return;}
-    const cfg=getClanConfig(),u=new URL(location.href);u.search='';u.hash='';u.searchParams.set('clan',clanInfo.invite_code);u.searchParams.set('sb',cfg.url);u.searchParams.set('pk',cfg.key);
+    const u=new URL(location.href);u.search='';u.hash='';u.searchParams.set('clan',clanInfo.invite_code);
     const url=u.toString(),title=`WARMAP · ${clanInfo.clan_name}`;
     try{if(navigator.share){await navigator.share({title,text:`Вступай в мой клан «${clanInfo.clan_name}»`,url});}else{await navigator.clipboard.writeText(url);showToast('Ссылка приглашения скопирована');}}catch(err){if(err?.name!=='AbortError'){try{await navigator.clipboard.writeText(url);showToast('Ссылка скопирована');}catch{showToast('Не удалось скопировать ссылку');}}}
   }
   async function saveClanConnection(){
-    const cfg=saveClanConfig($('clan-supabase-url').value,$('clan-supabase-key').value); if(!validClanConfig(cfg)){showToast('Проверьте Project URL и Publishable key');return;}
+    const cfg=saveClanConfig($('clan-supabase-url').value,$('clan-supabase-key').value); if(!validClanConfig(cfg)){showToast('Проверьте Project URL и Publishable key (необязательно менять)');return;}
     if(supabaseClient){try{await supabaseClient.auth.signOut({scope:'local'});}catch{}} supabaseClient=null;clanUser=null;clanInfo=null; await connectClanBackend();
   }
   function toggleClanConfig(){

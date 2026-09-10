@@ -10,3 +10,6 @@ WARMAP CONQUEST v18 - КЛАНЫ
 
 Статистика День / Неделя / Месяц начинает накапливаться с v18.
 Старый общий счетчик отжиманий сохраняется, но прошлые повторы нельзя достоверно разложить по дням.
+
+
+V19: Supabase config is embedded in index.html. Invite links now contain only ?clan=CODE.
