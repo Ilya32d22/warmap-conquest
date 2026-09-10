@@ -361,6 +361,41 @@
     .streak-box span { display:block; color:var(--muted); font-size:8px; text-transform:uppercase; letter-spacing:.09em; }
     .streak-box strong { display:block; font-size:24px; margin-top:3px; }
     .streak-note { margin-top:8px; color:var(--muted); font-size:9px; line-height:1.45; }
+
+    .progress-feature-card { margin-top:12px; border:1px solid var(--line); border-radius:18px; padding:13px; background:rgba(7,14,24,.58); }
+    .profile-grid { display:grid; grid-template-columns:1.2fr .8fr; gap:8px; margin-top:10px; }
+    .profile-main,.profile-side,.record-box,.league-panel,.weekly-goal-box { border:1px solid rgba(107,135,166,.14); border-radius:14px; padding:11px; background:rgba(5,10,18,.50); }
+    .profile-name { font-size:18px; font-weight:950; }
+    .profile-meta { color:var(--muted); font-size:9px; margin-top:4px; line-height:1.45; }
+    .profile-stats { display:grid; grid-template-columns:repeat(2,1fr); gap:7px; margin-top:9px; }
+    .profile-stat span,.record-box span,.league-panel span,.weekly-goal-box span { display:block; color:var(--muted); font-size:8px; text-transform:uppercase; letter-spacing:.08em; }
+    .profile-stat strong,.record-box strong { display:block; margin-top:3px; font-size:18px; }
+    .records-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:8px; margin-top:10px; }
+    .achievement-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:8px; margin-top:10px; }
+    .achievement-item { border:1px solid rgba(107,135,166,.13); border-radius:14px; padding:10px; background:rgba(5,10,18,.45); opacity:.42; }
+    .achievement-item.done { opacity:1; border-color:rgba(126,240,255,.25); background:linear-gradient(145deg,rgba(32,217,255,.08),rgba(5,10,18,.60)); }
+    .achievement-icon { font-size:20px; }
+    .achievement-name { margin-top:5px; font-size:10px; font-weight:900; }
+    .achievement-copy { margin-top:3px; color:var(--muted); font-size:8px; line-height:1.35; }
+    .league-name { font-size:22px; font-weight:950; margin-top:3px; }
+    .league-copy { color:var(--muted); font-size:9px; line-height:1.45; margin-top:4px; }
+    .league-track,.weekly-goal-track,.campaign-track { height:7px; border-radius:999px; overflow:hidden; background:#07111e; margin-top:9px; }
+    .league-track i,.weekly-goal-track i,.campaign-track i { display:block; height:100%; width:0; border-radius:inherit; background:linear-gradient(90deg,var(--cyan),var(--emerald)); transition:width .22s ease; }
+    .weekly-goal-row { display:grid; grid-template-columns:minmax(0,1fr) 100px; gap:8px; margin-top:10px; align-items:center; }
+    .campaign-card,.feed-card { margin-top:12px; border:1px solid var(--line); border-radius:18px; padding:13px; background:rgba(7,14,24,.58); }
+    .campaign-country { margin-top:7px; font-size:19px; font-weight:950; }
+    .campaign-create { display:grid; grid-template-columns:minmax(0,1fr) 90px auto; gap:7px; margin-top:10px; }
+    .campaign-stats { display:grid; grid-template-columns:1fr 1fr; gap:7px; margin-top:8px; }
+    .campaign-mini { border:1px solid rgba(107,135,166,.13); border-radius:12px; padding:9px; background:rgba(5,10,18,.45); }
+    .campaign-mini span { display:block; color:var(--muted); font-size:8px; text-transform:uppercase; letter-spacing:.08em; }
+    .campaign-mini strong { display:block; font-size:16px; margin-top:2px; }
+    .campaign-contrib { display:grid; gap:6px; margin-top:9px; }
+    .campaign-contrib-row { display:flex; justify-content:space-between; gap:10px; font-size:9px; color:#c9d7e7; }
+    .feed-list { display:grid; gap:7px; margin-top:10px; max-height:260px; overflow:auto; }
+    .feed-item { border:1px solid rgba(107,135,166,.12); border-radius:12px; padding:9px 10px; background:rgba(5,10,18,.45); }
+    .feed-text { font-size:9px; line-height:1.4; }
+    .feed-time { color:var(--muted); font-size:8px; margin-top:3px; }
+    @media (max-width:640px){ .profile-grid,.records-grid,.achievement-grid { grid-template-columns:1fr; } .campaign-create { grid-template-columns:1fr; } }
     .duel-create { display:grid; grid-template-columns:minmax(0,1fr) 90px auto; gap:8px; margin-top:10px; }
     .duel-list { display:grid; gap:8px; margin-top:10px; }
     .duel-item { border:1px solid rgba(142,121,255,.18); border-radius:14px; padding:10px; background:rgba(10,13,29,.58); }
@@ -626,6 +661,30 @@
         </div>
         <div id="streak-note" class="streak-note">Сделайте 10 отжиманий сегодня, чтобы день вошёл в серию.</div>
       </div>
+
+      <div class="progress-feature-card">
+        <div class="feature-head"><div><div class="feature-kicker">Игрок</div><div class="feature-title">Личный профиль</div></div><div id="profile-league-badge" class="feature-badge">БРОНЗА</div></div>
+        <div class="profile-grid">
+          <div class="profile-main"><div id="profile-name" class="profile-name">Игрок</div><div id="profile-meta" class="profile-meta">Личный прогресс WARMAP</div><div class="profile-stats"><div class="profile-stat"><span>Всего</span><strong id="profile-total">0</strong></div><div class="profile-stat"><span>Страны</span><strong id="profile-countries">0</strong></div><div class="profile-stat"><span>Сегодня</span><strong id="profile-today">0</strong></div><div class="profile-stat"><span>Серия</span><strong id="profile-streak">0</strong></div></div></div>
+          <div class="profile-side"><div class="pose-label">Статус</div><div id="profile-rank" style="margin-top:4px;font-size:15px;font-weight:900">Рекрут</div><div id="profile-side-copy" class="profile-meta">Продолжайте захватывать мир.</div></div>
+        </div>
+      </div>
+      <div class="progress-feature-card">
+        <div class="feature-head"><div><div class="feature-kicker">Личные максимумы</div><div class="feature-title">Рекорды</div></div><div class="feature-badge">LOCAL</div></div>
+        <div class="records-grid"><div class="record-box"><span>Лучший день</span><strong id="record-day">0</strong></div><div class="record-box"><span>Лучшая неделя</span><strong id="record-week">0</strong></div><div class="record-box"><span>Лучший месяц</span><strong id="record-month">0</strong></div><div class="record-box"><span>Лучшая серия</span><strong id="record-streak">0</strong></div></div>
+      </div>
+      <div class="progress-feature-card">
+        <div class="feature-head"><div><div class="feature-kicker">Коллекция</div><div class="feature-title">Карта достижений</div></div><div id="achievement-badge" class="feature-badge">0 / 12</div></div>
+        <div id="achievement-grid" class="achievement-grid"></div>
+      </div>
+      <div class="progress-feature-card">
+        <div class="feature-head"><div><div class="feature-kicker">Лига игроков</div><div class="feature-title">Недельная лига</div></div><div id="league-badge" class="feature-badge">БРОНЗА</div></div>
+        <div class="league-panel"><span>Текущая лига</span><div id="league-name" class="league-name">Бронза</div><div id="league-copy" class="league-copy">0 отжиманий за неделю</div><div class="league-track"><i id="league-fill"></i></div></div>
+      </div>
+      <div class="progress-feature-card">
+        <div class="feature-head"><div><div class="feature-kicker">На неделю</div><div class="feature-title">Персональная цель</div></div><div id="weekly-goal-badge" class="feature-badge">0%</div></div>
+        <div class="weekly-goal-box"><span>Прогресс этой недели</span><div class="weekly-goal-row"><div><strong id="weekly-goal-progress" style="font-size:20px">0 / 200</strong><div id="weekly-goal-copy" class="league-copy">Выберите комфортную цель.</div></div><select id="weekly-goal-select" class="clan-input"><option value="150">150</option><option value="200" selected>200</option><option value="300">300</option><option value="500">500</option><option value="750">750</option></select></div><div class="weekly-goal-track"><i id="weekly-goal-fill"></i></div></div>
+      </div>
       <div class="governance-card">
         <div class="gov-head"><div class="gov-kicker">ГОСУДАРСТВО</div><div id="gov-status" class="gov-status">Нет страны</div></div>
         <div id="gov-country" class="gov-country">Выберите свою страну</div>
@@ -721,6 +780,16 @@
           </div>
           <div id="duel-list" class="duel-list"><div class="clan-empty">Активных дуэлей пока нет</div></div>
         </div>
+
+        <div class="campaign-card">
+          <div class="feature-head"><div><div class="feature-kicker">Вместе</div><div class="feature-title">Клановый захват страны</div></div><div id="campaign-badge" class="feature-badge">НЕТ ЦЕЛИ</div></div>
+          <div id="campaign-active" class="hidden"><div id="campaign-country" class="campaign-country">—</div><div id="campaign-copy" class="clan-copy">Общий прогресс клана</div><div class="campaign-track"><i id="campaign-fill"></i></div><div class="campaign-stats"><div class="campaign-mini"><span>Всего</span><strong id="campaign-progress">0 / 0</strong></div><div class="campaign-mini"><span>Ваш вклад</span><strong id="campaign-my">0</strong></div></div><div id="campaign-contrib" class="campaign-contrib"></div></div>
+          <div id="campaign-create-wrap"><div class="clan-copy">Основатель выбирает страну и общую цель по отжиманиям.</div><div class="campaign-create"><select id="campaign-country-select" class="clan-input"><option value="">Выберите страну</option></select><select id="campaign-target" class="clan-input"><option value="500">500</option><option value="1000" selected>1000</option><option value="2000">2000</option></select><button id="campaign-create-btn" class="primary-btn">Начать</button></div></div>
+        </div>
+        <div class="feed-card">
+          <div class="feature-head"><div><div class="feature-kicker">Клан онлайн</div><div class="feature-title">Живая лента</div></div><div class="feature-badge">LIVE</div></div>
+          <div id="clan-feed" class="feed-list"><div class="clan-empty">Событий пока нет</div></div>
+        </div>
         <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--line)">
           <button id="clan-leave-btn" class="danger-btn" style="width:100%">Покинуть клан</button>
         </div>
@@ -768,7 +837,7 @@
 <script>
 (() => {
   'use strict';
-  const APP_VERSION = 21;
+  const APP_VERSION = 23;
   const STORAGE_KEY = 'warmap-conquest-v2';
   const CLAN_CONFIG_KEY = 'warmap-clan-config-v1';
   const CLAN_NAME_KEY = 'warmap-player-name-v1';
@@ -801,7 +870,10 @@
     defenseProgress: 0,
     defenseMisses: 0,
     notifiedAchievements: [],
-    dailyReps: {}
+    dailyReps: {},
+    weeklyGoalTarget: 200,
+    clanFeedDayMilestone: 0,
+    clanFeedCountries: 0
   };
 
   let worldFeatures = [], featureByCode = new Map(), countryMeta = new Map(), neighborMap = new Map();
@@ -842,6 +914,7 @@
   let deferredInstallPrompt = null;
   let audioContext = null;
   let supabaseClient = null, clanUser = null, clanInfo = null, clanLeaderboard = [];
+  let clanCampaign = null, clanCampaignContrib = [], clanFeedRows = [], duelWinCount = 0;
   let clanSyncTimer = null, clanRefreshTimer = null, clanConnecting = false, pendingInviteCode = null;
 
   let detector = null, videoStream = null, animFrameId = null, cameraRunning = false, facingMode = 'user';
@@ -873,6 +946,9 @@
       state.defenseMisses = Math.max(0, Number(saved.defenseMisses) || 0);
       state.notifiedAchievements = Array.isArray(saved.notifiedAchievements) ? saved.notifiedAchievements.filter(x=>typeof x==='string') : [];
       state.dailyReps = saved.dailyReps && typeof saved.dailyReps === 'object' ? saved.dailyReps : {};
+      state.weeklyGoalTarget = [150,200,300,500,750].includes(Number(saved.weeklyGoalTarget)) ? Number(saved.weeklyGoalTarget) : 200;
+      state.clanFeedDayMilestone = Math.max(0, Number(saved.clanFeedDayMilestone)||0);
+      state.clanFeedCountries = Math.max(0, Number(saved.clanFeedCountries)||0);
     } catch (err) { console.warn('Saved state ignored:', err); }
   }
 
@@ -896,7 +972,10 @@
         defenseProgress: state.defenseProgress,
         defenseMisses: state.defenseMisses,
         notifiedAchievements: state.notifiedAchievements,
-        dailyReps: state.dailyReps
+        dailyReps: state.dailyReps,
+        weeklyGoalTarget: state.weeklyGoalTarget,
+        clanFeedDayMilestone: state.clanFeedDayMilestone,
+        clanFeedCountries: state.clanFeedCountries
       }));
     } catch (err) { console.warn('Could not save progress:', err); }
   }
@@ -1296,7 +1375,7 @@
   function registerPushUp(count=1) {
     count=clamp(Math.floor(Number(count)||1),1,100);
     prepareWorkoutDay();
-    const repDay=localDayKey(); state.dailyReps[repDay]=Math.max(0,Number(state.dailyReps[repDay])||0)+count; trimDailyReps();
+    const repDay=localDayKey(), beforeDay=Math.max(0,Number(state.dailyReps[repDay])||0), beforeCountries=completedCountriesCount(); state.dailyReps[repDay]=beforeDay+count; trimDailyReps();
     processWeeklyDefense();
     let structuralChange=false;
     for(let i=0;i<count;i++) {
@@ -1334,7 +1413,7 @@
     }
     evaluateAchievements(true);
     if(structuralChange) renderCountryDirectory($('country-search')?.value||'');
-    refreshAll(false); saveState();scheduleClanSync(); playRepSound(); renderMissionsAndStreak();
+    const afterCountries=completedCountriesCount(); maybeLogClanMilestones(beforeDay,Number(state.dailyReps[repDay])||0,beforeCountries,afterCountries); refreshAll(false); saveState();scheduleClanSync(); playRepSound(); renderMissionsAndStreak();
   }
 
 
@@ -1542,6 +1621,38 @@
     }
     return {current,best};
   }
+
+  function repsBetween(startKey,endKey){let s=0;for(const [k,v] of Object.entries(state.dailyReps||{}))if(k>=startKey&&k<=endKey)s+=Math.max(0,Number(v)||0);return s;}
+  function currentWeekReps(){const start=weekStartKey(new Date()),d=new Date(start+'T12:00:00');d.setDate(d.getDate()+6);return repsBetween(start,localDayKey(d));}
+  function currentMonthReps(){const now=new Date(),start=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-01`;const end=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-31`;return repsBetween(start,end);}
+  function recordStats(){
+    const entries=Object.entries(state.dailyReps||{}).map(([k,v])=>[k,Math.max(0,Number(v)||0)]).sort((a,b)=>a[0].localeCompare(b[0]));
+    let bestDay=0,bestWeek=0,bestMonth=0;const weeks={},months={};
+    for(const [k,v] of entries){bestDay=Math.max(bestDay,v);const wk=weekStartKey(new Date(k+'T12:00:00'));weeks[wk]=(weeks[wk]||0)+v;const mo=k.slice(0,7);months[mo]=(months[mo]||0)+v;}
+    Object.values(weeks).forEach(v=>bestWeek=Math.max(bestWeek,v));Object.values(months).forEach(v=>bestMonth=Math.max(bestMonth,v));
+    return {bestDay,bestWeek,bestMonth,bestStreak:workoutStreakStats().best};
+  }
+  function leagueInfo(){
+    const w=currentWeekReps();const levels=[{name:'Бронза',min:0,next:50},{name:'Серебро',min:50,next:150},{name:'Золото',min:150,next:300},{name:'Платина',min:300,next:500},{name:'Алмаз',min:500,next:null}];
+    let level=levels[0];for(const l of levels)if(w>=l.min)level=l;
+    const pct=level.next?clamp(Math.round((w-level.min)/(level.next-level.min)*100),0,100):100;
+    return {...level,week:w,pct};
+  }
+  function localRankName(){const c=completedCountriesCount();if(state.presidencyAchieved&&c>=25)return 'Император мира';if(state.presidencyAchieved)return 'Президент';if(c>=1)return 'Губернатор';return 'Рекрут';}
+  function achievementDefinitions(){
+    const today=Number(state.dailyReps?.[localDayKey()])||0,c=completedCountriesCount(),st=workoutStreakStats();
+    return [
+      ['first10','⚡','Первый десяток','Сделать 10 отжиманий',state.totalReps>=10],['day50','🔥','50 за день','50 отжиманий за один день',today>=50||recordStats().bestDay>=50],['total100','✦','Сотня','100 отжиманий всего',state.totalReps>=100],['total500','✪','500','500 отжиманий всего',state.totalReps>=500],['total1000','♛','Тысяча','1000 отжиманий всего',state.totalReps>=1000],['country1','⚑','Первая страна','Полностью захватить страну',c>=1],['country5','🌐','Пять стран','Захватить 5 стран',c>=5],['country10','🗺','Десять стран','Захватить 10 стран',c>=10],['streak3','◈','Серия 3','Тренироваться 3 дня подряд',st.best>=3],['streak7','◆','Серия 7','Тренироваться 7 дней подряд',st.best>=7],['president','★','Президент','Стать президентом',state.presidencyAchieved],['diamond','💎','Алмаз','Достичь Алмазной лиги',leagueInfo().name==='Алмаз']
+    ];
+  }
+  function renderPlayerProgressFeatures(){
+    const st=workoutStreakStats(),rec=recordStats(),lg=leagueInfo(),today=Number(state.dailyReps?.[localDayKey()])||0,c=completedCountriesCount(),name=(localStorage.getItem(CLAN_NAME_KEY)||'Игрок').trim()||'Игрок';
+    if($('profile-name'))$('profile-name').textContent=name;if($('profile-total'))$('profile-total').textContent=state.totalReps;if($('profile-countries'))$('profile-countries').textContent=c;if($('profile-today'))$('profile-today').textContent=today;if($('profile-streak'))$('profile-streak').textContent=st.current;if($('profile-rank'))$('profile-rank').textContent=localRankName();if($('profile-meta'))$('profile-meta').textContent=`${lg.name} · ${lg.week} за неделю`;if($('profile-side-copy'))$('profile-side-copy').textContent=duelWinCount?`Побед в дуэлях: ${duelWinCount}`:'Продолжайте захватывать мир.';if($('profile-league-badge'))$('profile-league-badge').textContent=lg.name.toUpperCase();
+    if($('record-day'))$('record-day').textContent=rec.bestDay;if($('record-week'))$('record-week').textContent=rec.bestWeek;if($('record-month'))$('record-month').textContent=rec.bestMonth;if($('record-streak'))$('record-streak').textContent=rec.bestStreak;
+    if($('league-name'))$('league-name').textContent=lg.name;if($('league-badge'))$('league-badge').textContent=lg.name.toUpperCase();if($('league-copy'))$('league-copy').textContent=lg.next?`${lg.week} за неделю · до ${lg.next}: ${Math.max(0,lg.next-lg.week)}`:`${lg.week} за неделю · максимальная лига`;if($('league-fill'))$('league-fill').style.width=`${lg.pct}%`;
+    const goal=state.weeklyGoalTarget||200,wp=currentWeekReps(),gp=Math.min(100,Math.round(wp/goal*100));if($('weekly-goal-select'))$('weekly-goal-select').value=String(goal);if($('weekly-goal-progress'))$('weekly-goal-progress').textContent=`${wp} / ${goal}`;if($('weekly-goal-badge'))$('weekly-goal-badge').textContent=`${gp}%`;if($('weekly-goal-fill'))$('weekly-goal-fill').style.width=`${gp}%`;if($('weekly-goal-copy'))$('weekly-goal-copy').textContent=wp>=goal?'Недельная цель выполнена ✓':`Осталось ${Math.max(0,goal-wp)} · примерно ${Math.ceil(Math.max(0,goal-wp)/Math.max(1,7-((new Date().getDay()+6)%7)))} в день`;
+    const ach=achievementDefinitions(),done=ach.filter(x=>x[4]).length;if($('achievement-badge'))$('achievement-badge').textContent=`${done} / ${ach.length}`;if($('achievement-grid'))$('achievement-grid').innerHTML=ach.map(a=>`<div class="achievement-item ${a[4]?'done':''}"><div class="achievement-icon">${a[1]}</div><div class="achievement-name">${a[4]?'✓ ':''}${a[2]}</div><div class="achievement-copy">${a[3]}</div></div>`).join('');
+  }
   function renderMissionsAndStreak(){
     const day=localDayKey(),done=Number(state.dailyReps?.[day])||0,targets=getDailyMissionTargets();
     const names=['Разминка','Боевой темп','Дневная цель'];
@@ -1552,6 +1663,7 @@
     if($('streak-current'))$('streak-current').textContent=st.current;
     if($('streak-best'))$('streak-best').textContent=st.best;
     if($('streak-note'))$('streak-note').textContent=done>=10?`Сегодня серия защищена · ${done} отжиманий`:`До защиты серии сегодня: ${Math.max(0,10-done)} отжиманий`;
+    renderPlayerProgressFeatures();
   }
 
   function getClanConfig(){
@@ -1625,7 +1737,7 @@
       if(!clanInfo){showClanMode('no-clan');setClanStatus('ОНЛАЙН','good');return;}
       showClanMode('dashboard');setClanStatus('ОНЛАЙН','good');
       $('clan-name').textContent=clanInfo.clan_name||'Клан'; $('clan-invite-code').textContent=clanInfo.invite_code||'—'; $('clan-role').textContent=clanInfo.role==='owner'?'ОСНОВАТЕЛЬ':'УЧАСТНИК'; $('clan-members-count').textContent=Number(clanInfo.member_count)||0;
-      const board=await supabaseClient.rpc('get_clan_leaderboard'); if(board.error)throw board.error; clanLeaderboard=Array.isArray(board.data)?board.data:[]; renderClanLeaderboard(); await refreshDuels(false);
+      const board=await supabaseClient.rpc('get_clan_leaderboard'); if(board.error)throw board.error; clanLeaderboard=Array.isArray(board.data)?board.data:[]; renderClanLeaderboard(); await refreshDuels(false); await refreshClanCampaign(false); await refreshClanFeed(false);
     }catch(err){console.error('Clan refresh:',err);setClanStatus('ОШИБКА','bad');if(showErrors)showToast(`Клан: ${err.message||'не удалось обновить'}`,4200);}
   }
   function renderClanLeaderboard(){
@@ -1651,17 +1763,34 @@
   }
   async function refreshDuels(showErrors=false){
     if(!supabaseClient||!clanInfo){renderDuels([]);return;}
-    try{const {data,error}=await supabaseClient.rpc('get_my_duels');if(error)throw error;renderDuels(Array.isArray(data)?data:[]);$('duel-status-badge').textContent='ОНЛАЙН';}
+    try{const {data,error}=await supabaseClient.rpc('get_my_duels');if(error)throw error;const rows=Array.isArray(data)?data:[];renderDuels(rows);duelWinCount=rows.filter(d=>d.status==='finished'&&d.winner_id===clanUser?.id).length;renderPlayerProgressFeatures();$('duel-status-badge').textContent='ОНЛАЙН';}
     catch(err){console.warn('Duels:',err);renderDuels([]);if($('duel-status-badge'))$('duel-status-badge').textContent='НУЖЕН SQL';if(showErrors)showToast('Для дуэлей запустите SQL из v21',3800);}
   }
   async function createDuel(){
     if(!supabaseClient||!clanInfo){showToast('Сначала подключитесь к клану');return;}
     const opponent=$('duel-opponent').value,target=Number($('duel-target').value)||30;
     if(!opponent){showToast('Выберите соперника');return;}
-    try{await syncMyClanStats(false);const {error}=await supabaseClient.rpc('create_duel',{p_opponent:opponent,p_target:target});if(error)throw error;showToast(`Дуэль на ${target} отжиманий началась`);await refreshDuels();}
+    try{await syncMyClanStats(false);const {error}=await supabaseClient.rpc('create_duel',{p_opponent:opponent,p_target:target});if(error)throw error;const opp=clanLeaderboard.find(r=>r.user_id===opponent);addClanEvent('duel',`вызвал ${opp?.display_name||'игрока'} на дуэль до ${target}`);showToast(`Дуэль на ${target} отжиманий началась`);await refreshDuels();await refreshClanFeed(false);}
     catch(err){showToast(err.message||'Не удалось создать дуэль',4200);}
   }
 
+
+  function populateCampaignCountryOptions(){const sel=$('campaign-country-select');if(!sel||!countryMeta.size)return;const cur=sel.value;const opts=[...countryMeta.values()].filter(m=>m.baseCells>0).sort((a,b)=>a.name.localeCompare(b.name,'ru'));sel.innerHTML='<option value="">Выберите страну</option>'+opts.map(m=>`<option value="${m.code}">${escapeHtml(m.name)}</option>`).join('');if(opts.some(m=>m.code===cur))sel.value=cur;}
+  async function refreshClanCampaign(showErrors=false){
+    if(!supabaseClient||!clanInfo){clanCampaign=null;return;}populateCampaignCountryOptions();
+    try{const q=await supabaseClient.rpc('get_clan_campaign');if(q.error)throw q.error;clanCampaign=Array.isArray(q.data)?q.data[0]:q.data;const c=await supabaseClient.rpc('get_clan_campaign_contributions');if(c.error)throw c.error;clanCampaignContrib=Array.isArray(c.data)?c.data:[];renderClanCampaign();}
+    catch(err){console.warn('Campaign:',err);if($('campaign-badge'))$('campaign-badge').textContent='НУЖЕН SQL';if(showErrors)showToast('Для кланового захвата запустите SQL v23',3800);}
+  }
+  function renderClanCampaign(){
+    const active=!!clanCampaign&&clanCampaign.status==='active';if($('campaign-active'))$('campaign-active').classList.toggle('hidden',!active);if($('campaign-create-wrap'))$('campaign-create-wrap').classList.toggle('hidden',active||clanInfo?.role!=='owner');if($('campaign-badge'))$('campaign-badge').textContent=active?'ИДЁТ':'НЕТ ЦЕЛИ';if(!active)return;
+    const target=Math.max(1,Number(clanCampaign.target_reps)||1),progress=Math.max(0,Number(clanCampaign.total_progress)||0),pct=Math.min(100,Math.round(progress/target*100));$('campaign-country').textContent=clanCampaign.country_name||'Страна';$('campaign-progress').textContent=`${Math.min(progress,target)} / ${target}`;$('campaign-my').textContent=Number(clanCampaign.my_contribution)||0;$('campaign-fill').style.width=`${pct}%`;$('campaign-copy').textContent=`Клан захватывает страну вместе · ${pct}%`;$('campaign-contrib').innerHTML=clanCampaignContrib.slice(0,8).map(r=>`<div class="campaign-contrib-row"><span>${escapeHtml(r.display_name||'Игрок')}</span><strong>${Number(r.contributed)||0}</strong></div>`).join('');
+  }
+  async function createClanCampaign(){if(!supabaseClient||!clanInfo)return;const code=$('campaign-country-select').value,target=Number($('campaign-target').value)||1000,meta=getMeta(code);if(!meta){showToast('Выберите страну');return;}try{await syncMyClanStats(false);const {error}=await supabaseClient.rpc('create_clan_campaign',{p_country_code:String(code),p_country_name:meta.name,p_target_reps:target});if(error)throw error;showToast(`Клан начал захват: ${meta.name}`);await refreshClanCampaign();await refreshClanFeed(false);}catch(err){showToast(err.message||'Не удалось начать захват',4200);}}
+  async function addClanEvent(type,textValue){if(!supabaseClient||!clanInfo)return;try{await supabaseClient.rpc('add_clan_event',{p_type:String(type||'event').slice(0,24),p_text:String(textValue||'').slice(0,180)});}catch(err){console.warn('Feed event:',err);}}
+  async function refreshClanFeed(showErrors=false){if(!supabaseClient||!clanInfo)return;try{const {data,error}=await supabaseClient.rpc('get_clan_events');if(error)throw error;clanFeedRows=Array.isArray(data)?data:[];renderClanFeed();}catch(err){console.warn('Feed:',err);if(showErrors)showToast('Для ленты запустите SQL v23',3800);}}
+  function renderClanFeed(){const el=$('clan-feed');if(!el)return;if(!clanFeedRows.length){el.innerHTML='<div class="clan-empty">Событий пока нет</div>';return;}el.innerHTML=clanFeedRows.map(r=>{const when=new Date(r.created_at);const tm=isNaN(when)?'':when.toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});return `<div class="feed-item"><div class="feed-text"><b>${escapeHtml(r.display_name||'Игрок')}</b> ${escapeHtml(r.event_text||'')}</div><div class="feed-time">${tm}</div></div>`}).join('');}
+  function maybeLogClanMilestones(beforeDay,afterDay,beforeCountries,afterCountries){
+    if(!supabaseClient||!clanInfo)return;const oldM=Math.floor(beforeDay/50),newM=Math.floor(afterDay/50);if(newM>oldM&&afterDay>=50){state.clanFeedDayMilestone=newM*50;addClanEvent('reps',`сделал ${newM*50} отжиманий сегодня`);}if(afterCountries>beforeCountries){state.clanFeedCountries=afterCountries;addClanEvent('country',`захватил ещё одну страну · всего ${afterCountries}`);} }
   async function createClan(){
     if(!supabaseClient&&!(await connectClanBackend()))return; if(!(await savePlayerName()))return;
     const name=($('clan-create-name').value||'').trim();if(name.length<2){showToast('Введите название клана');return;}
@@ -1679,8 +1808,8 @@
     try{
       const {error}=await supabaseClient.rpc('leave_clan');
       if(error)throw error;
-      clanInfo=null;clanLeaderboard=[];pendingInviteCode=null;
-      renderClanLeaderboard();renderDuels([]);showClanMode('no-clan');setClanStatus('ОНЛАЙН','good');
+      clanInfo=null;clanLeaderboard=[];clanCampaign=null;clanCampaignContrib=[];clanFeedRows=[];pendingInviteCode=null;
+      renderClanLeaderboard();renderDuels([]);renderClanFeed();showClanMode('no-clan');setClanStatus('ОНЛАЙН','good');
       const u=new URL(location.href);u.searchParams.delete('clan');history.replaceState({},'',u.pathname+(u.search||'')+(u.hash||''));
       if($('clan-join-code'))$('clan-join-code').value='';
       if($('clan-pending-invite'))$('clan-pending-invite').classList.add('hidden');
@@ -1967,7 +2096,7 @@
     $('camera-start-btn').addEventListener('click',startCamera);$('camera-stop-btn').addEventListener('click',stopCamera);$('camera-switch-btn').addEventListener('click',switchCamera);
     $('review-play-btn').addEventListener('click',startReviewTimelapse);$('review-clear-btn').addEventListener('click',clearReviewClips);
     $('review-video').addEventListener('ended',()=>{if(!reviewPlaying)return;const next=reviewIndex+1;if(next<sessionRepClips.length)playReviewClip(next);else{reviewPlaying=false;$('review-meta').textContent=`Таймлапс завершён · ${sessionRepClips.length} повторов`;}});
-    $('duel-create-btn').addEventListener('click',createDuel);$('clan-connect-btn').addEventListener('click',saveClanConnection);$('clan-save-name-btn').addEventListener('click',savePlayerName);$('clan-create-btn').addEventListener('click',createClan);$('clan-join-btn').addEventListener('click',joinClan);$('clan-share-btn').addEventListener('click',shareClanInvite);$('clan-leave-btn').addEventListener('click',leaveClan);$('clan-refresh-btn').addEventListener('click',()=>refreshClanData());$('clan-config-toggle').addEventListener('click',toggleClanConfig);
+    $('duel-create-btn').addEventListener('click',createDuel);$('campaign-create-btn').addEventListener('click',createClanCampaign);$('weekly-goal-select').addEventListener('change',e=>{state.weeklyGoalTarget=Number(e.target.value)||200;saveState();renderPlayerProgressFeatures();});$('clan-connect-btn').addEventListener('click',saveClanConnection);$('clan-save-name-btn').addEventListener('click',savePlayerName);$('clan-create-btn').addEventListener('click',createClan);$('clan-join-btn').addEventListener('click',joinClan);$('clan-share-btn').addEventListener('click',shareClanInvite);$('clan-leave-btn').addEventListener('click',leaveClan);$('clan-refresh-btn').addEventListener('click',()=>refreshClanData());$('clan-config-toggle').addEventListener('click',toggleClanConfig);
     document.addEventListener('visibilitychange',()=>{if(document.hidden&&cameraRunning)stopCamera();});
   }
 
