@@ -721,6 +721,9 @@
           </div>
           <div id="duel-list" class="duel-list"><div class="clan-empty">Активных дуэлей пока нет</div></div>
         </div>
+        <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--line)">
+          <button id="clan-leave-btn" class="danger-btn" style="width:100%">Покинуть клан</button>
+        </div>
         <button id="clan-config-toggle" class="clan-config-toggle">Настройки подключения</button>
       </div>
     </section>
@@ -1669,6 +1672,23 @@
     const code=($('clan-join-code').value||'').trim().toUpperCase();if(code.length<4){showToast('Введите код приглашения');return;}
     try{const {data,error}=await supabaseClient.rpc('join_clan',{p_invite_code:code});if(error)throw error;clanInfo=Array.isArray(data)?data[0]:data;pendingInviteCode=null;showToast('Вы вступили в клан');await refreshClanData();}catch(err){showToast(err.message||'Не удалось вступить',4200);}
   }
+  async function leaveClan(){
+    if(!supabaseClient||!clanInfo){showToast('Вы не состоите в клане');return;}
+    const clanName=clanInfo.clan_name||'этот клан';
+    if(!confirm(`Покинуть «${clanName}»?\n\nВы сможете позже вступить в другой клан или создать новый.`))return;
+    try{
+      const {error}=await supabaseClient.rpc('leave_clan');
+      if(error)throw error;
+      clanInfo=null;clanLeaderboard=[];pendingInviteCode=null;
+      renderClanLeaderboard();renderDuels([]);showClanMode('no-clan');setClanStatus('ОНЛАЙН','good');
+      const u=new URL(location.href);u.searchParams.delete('clan');history.replaceState({},'',u.pathname+(u.search||'')+(u.hash||''));
+      if($('clan-join-code'))$('clan-join-code').value='';
+      if($('clan-pending-invite'))$('clan-pending-invite').classList.add('hidden');
+      showToast('Вы покинули клан');
+      await refreshClanData(false);
+    }catch(err){showToast(err.message||'Не удалось покинуть клан',4200);}
+  }
+
   async function shareClanInvite(){
     if(!clanInfo?.invite_code)return; if(!/^https?:$/.test(location.protocol)||['localhost','127.0.0.1'].includes(location.hostname)){showToast('Чтобы отправить ссылку другу, сначала разместите приложение на HTTPS',4600);return;}
     const u=new URL(location.href);u.search='';u.hash='';u.searchParams.set('clan',clanInfo.invite_code);
@@ -1947,7 +1967,7 @@
     $('camera-start-btn').addEventListener('click',startCamera);$('camera-stop-btn').addEventListener('click',stopCamera);$('camera-switch-btn').addEventListener('click',switchCamera);
     $('review-play-btn').addEventListener('click',startReviewTimelapse);$('review-clear-btn').addEventListener('click',clearReviewClips);
     $('review-video').addEventListener('ended',()=>{if(!reviewPlaying)return;const next=reviewIndex+1;if(next<sessionRepClips.length)playReviewClip(next);else{reviewPlaying=false;$('review-meta').textContent=`Таймлапс завершён · ${sessionRepClips.length} повторов`;}});
-    $('duel-create-btn').addEventListener('click',createDuel);$('clan-connect-btn').addEventListener('click',saveClanConnection);$('clan-save-name-btn').addEventListener('click',savePlayerName);$('clan-create-btn').addEventListener('click',createClan);$('clan-join-btn').addEventListener('click',joinClan);$('clan-share-btn').addEventListener('click',shareClanInvite);$('clan-refresh-btn').addEventListener('click',()=>refreshClanData());$('clan-config-toggle').addEventListener('click',toggleClanConfig);
+    $('duel-create-btn').addEventListener('click',createDuel);$('clan-connect-btn').addEventListener('click',saveClanConnection);$('clan-save-name-btn').addEventListener('click',savePlayerName);$('clan-create-btn').addEventListener('click',createClan);$('clan-join-btn').addEventListener('click',joinClan);$('clan-share-btn').addEventListener('click',shareClanInvite);$('clan-leave-btn').addEventListener('click',leaveClan);$('clan-refresh-btn').addEventListener('click',()=>refreshClanData());$('clan-config-toggle').addEventListener('click',toggleClanConfig);
     document.addEventListener('visibilitychange',()=>{if(document.hidden&&cameraRunning)stopCamera();});
   }
 
